@@ -1,0 +1,1496 @@
+/* =============================================================================
+   LIBRARY MANAGEMENT SYSTEM — Premium Dark Dashboard Theme
+   Pure CSS · CSS Variables only · ASP.NET Web Forms compatible
+   Connect: <link rel="stylesheet" href="~/CSS/library-dashboard.css" />
+   ============================================================================= */
+
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=DM+Sans:wght@400;500;600;700&display=swap');
+
+/* ── Design tokens ─────────────────────────────────────────────────────────── */
+:root {
+    /* Surfaces */
+    --bg-base: #0a0e17;
+    --bg-elevated: #111827;
+    --bg-panel: #151d2e;
+    --bg-card: rgba(22, 30, 48, 0.72);
+    --bg-glass: rgba(17, 24, 39, 0.55);
+    --bg-input: rgba(10, 14, 23, 0.65);
+    --bg-hover: rgba(99, 102, 241, 0.08);
+    --bg-row-alt: rgba(255, 255, 255, 0.03);
+    --bg-row-hover: rgba(99, 102, 241, 0.12);
+
+    /* Accent */
+    --accent: #6366f1;
+    --accent-light: #818cf8;
+    --accent-dark: #4f46e5;
+    --accent-glow: rgba(99, 102, 241, 0.45);
+    --accent-secondary: #22d3ee;
+    --accent-warm: #f59e0b;
+    --accent-danger: #ef4444;
+    --accent-success: #10b981;
+
+    /* Gradients */
+    --gradient-hero: linear-gradient(135deg, #0a0e17 0%, #1a1f35 40%, #0f172a 100%);
+    --gradient-accent: linear-gradient(135deg, var(--accent) 0%, #8b5cf6 50%, var(--accent-secondary) 100%);
+    --gradient-card: linear-gradient(145deg, rgba(30, 41, 70, 0.5) 0%, rgba(15, 23, 42, 0.8) 100%);
+    --gradient-nav-active: linear-gradient(90deg, rgba(99, 102, 241, 0.25), transparent);
+
+    /* Text */
+    --text-primary: #f1f5f9;
+    --text-secondary: #94a3b8;
+    --text-muted: #64748b;
+    --text-inverse: #0f172a;
+
+    /* Borders & shadows */
+    --border: rgba(148, 163, 184, 0.12);
+    --border-focus: rgba(99, 102, 241, 0.55);
+    --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.35);
+    --shadow-md: 0 8px 32px rgba(0, 0, 0, 0.45);
+    --shadow-lg: 0 16px 48px rgba(0, 0, 0, 0.55);
+    --shadow-glow: 0 0 40px var(--accent-glow);
+    --shadow-card: 0 4px 24px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.04);
+
+    /* Glass */
+    --glass-blur: blur(18px) saturate(1.4);
+    --glass-border: 1px solid rgba(255, 255, 255, 0.08);
+
+    /* Layout */
+    --sidebar-width: 260px;
+    --header-height: 72px;
+    --content-max: 1280px;
+    --radius: 14px;
+    --radius-sm: 8px;
+    --radius-lg: 20px;
+    --radius-pill: 999px;
+
+    /* Motion */
+    --ease: cubic-bezier(0.4, 0, 0.2, 1);
+    --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+    --duration: 0.28s;
+    --duration-slow: 0.5s;
+
+    /* Typography */
+    --font-sans: 'Plus Jakarta Sans', 'DM Sans', system-ui, sans-serif;
+    --font-display: 'DM Sans', var(--font-sans);
+}
+
+/* ── Override Web Forms inline layout classes ──────────────────────────────── */
+.auto-style1,
+.auto-style2,
+.auto-style3,
+.auto-style4 {
+    width: 100% !important;
+    border: none !important;
+}
+
+/* ── Reset & base ──────────────────────────────────────────────────────────── */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+}
+
+body {
+    margin: 0;
+    font-family: var(--font-sans);
+    font-size: 0.9375rem;
+    line-height: 1.6;
+    color: var(--text-primary);
+    background: var(--bg-base);
+    background-image:
+        var(--gradient-hero),
+        radial-gradient(ellipse 80% 50% at 20% -10%, rgba(99, 102, 241, 0.18) 0%, transparent 55%),
+        radial-gradient(ellipse 60% 40% at 90% 110%, rgba(34, 211, 238, 0.1) 0%, transparent 50%);
+    background-attachment: fixed;
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+
+/* Page enter transition */
+body {
+    animation: pageEnter var(--duration-slow) var(--ease) both;
+}
+
+center {
+    display: block;
+    text-align: center;
+    max-width: 100%;
+}
+
+/* ── Scrollbar ─────────────────────────────────────────────────────────────── */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--bg-elevated);
+}
+
+::-webkit-scrollbar-thumb {
+    background: rgba(99, 102, 241, 0.35);
+    border-radius: var(--radius-pill);
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--accent);
+}
+
+/* ── Keyframes ─────────────────────────────────────────────────────────────── */
+@keyframes pageEnter {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes fadeUp {
+    from {
+        opacity: 0;
+        transform: translateY(24px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeDown {
+    from {
+        opacity: 0;
+        transform: translateY(-16px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes slideInLeft {
+    from {
+        opacity: 0;
+        transform: translateX(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes shimmer {
+    0% {
+        background-position: -200% 0;
+    }
+    100% {
+        background-position: 200% 0;
+    }
+}
+
+@keyframes pulseGlow {
+    0%,
+    100% {
+        box-shadow: 0 0 0 0 var(--accent-glow);
+    }
+    50% {
+        box-shadow: 0 0 20px 4px var(--accent-glow);
+    }
+}
+
+@keyframes badgePulse {
+    0%,
+    100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.15);
+    }
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes bookFloat {
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-6px);
+    }
+}
+
+@keyframes modalIn {
+    from {
+        opacity: 0;
+        transform: scale(0.94) translateY(12px);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+
+@keyframes overlayIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes scrollReveal {
+    from {
+        opacity: 0;
+        transform: translateY(32px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes navStagger {
+    from {
+        opacity: 0;
+        transform: translateX(-12px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes glowLine {
+    0%,
+    100% {
+        opacity: 0.4;
+    }
+    50% {
+        opacity: 1;
+    }
+}
+
+/* ── Typography ────────────────────────────────────────────────────────────── */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-family: var(--font-display);
+    font-weight: 700;
+    color: var(--text-primary);
+    line-height: 1.25;
+    letter-spacing: -0.02em;
+}
+
+h1 {
+    font-size: clamp(1.35rem, 2.8vw, 1.85rem);
+    margin: 0;
+    padding: 1.25rem 1.5rem;
+    background: var(--bg-glass);
+    backdrop-filter: var(--glass-blur);
+    -webkit-backdrop-filter: var(--glass-blur);
+    border-bottom: var(--glass-border);
+    box-shadow: var(--shadow-sm);
+    animation: fadeDown var(--duration-slow) var(--ease) both;
+}
+
+h2 {
+    font-size: clamp(1.15rem, 2vw, 1.45rem);
+    margin: 1rem 0 0.75rem;
+    color: var(--text-primary);
+}
+
+h3,
+h4 {
+    color: var(--text-secondary);
+    font-weight: 600;
+}
+
+p {
+    color: var(--text-secondary);
+    animation: fadeUp var(--duration-slow) var(--ease) 0.1s both;
+}
+
+a {
+    color: var(--accent-light);
+    transition: color var(--duration) var(--ease);
+}
+
+a:hover {
+    color: var(--accent-secondary);
+}
+
+hr {
+    border: none;
+    height: 1px;
+    margin: 0;
+    background: linear-gradient(90deg, transparent, var(--border), transparent);
+}
+
+/* ── App shell (master pages) ──────────────────────────────────────────────── */
+#form1 {
+    text-align: left;
+    animation: fadeUp var(--duration-slow) var(--ease) 0.08s both;
+}
+
+/* Primary navigation table (Site1 / Site2) */
+#form1 > table.auto-style1,
+#form1 > table:first-of-type {
+    width: 100% !important;
+    border: none !important;
+    border-collapse: separate !important;
+    border-spacing: 0 !important;
+    background: var(--bg-glass) !important;
+    backdrop-filter: var(--glass-blur);
+    -webkit-backdrop-filter: var(--glass-blur);
+    box-shadow: var(--shadow-md), inset 0 1px 0 rgba(255, 255, 255, 0.06);
+    border-bottom: var(--glass-border) !important;
+    margin: 0 !important;
+    transition: transform var(--duration) var(--ease), box-shadow var(--duration) var(--ease);
+    animation: slideInLeft var(--duration-slow) var(--ease) both;
+}
+
+#form1 > table.auto-style1 tr:first-child td,
+#form1 > table:first-of-type tr:first-child td {
+    padding: 0.5rem 0.35rem !important;
+    border: none !important;
+    vertical-align: middle !important;
+    background: transparent !important;
+}
+
+/* Hide empty spacer row in Site1 nav */
+#form1 > table.auto-style1 tr:nth-child(2),
+#form1 > table:first-of-type tr:empty {
+    display: none;
+}
+
+/* ASP.NET LinkButton → <a> */
+/* Staggered sidebar / nav link entrance */
+#form1 > table.auto-style1 tr:first-child td:nth-child(1) a { animation: navStagger 0.4s var(--ease) 0.05s both; }
+#form1 > table.auto-style1 tr:first-child td:nth-child(2) a { animation: navStagger 0.4s var(--ease) 0.1s both; }
+#form1 > table.auto-style1 tr:first-child td:nth-child(3) a { animation: navStagger 0.4s var(--ease) 0.15s both; }
+#form1 > table.auto-style1 tr:first-child td:nth-child(4) a { animation: navStagger 0.4s var(--ease) 0.2s both; }
+#form1 > table.auto-style1 tr:first-child td:nth-child(5) a { animation: navStagger 0.4s var(--ease) 0.25s both; }
+#form1 > table.auto-style1 tr:first-child td:nth-child(6) a { animation: navStagger 0.4s var(--ease) 0.3s both; }
+#form1 > table.auto-style1 tr:first-child td:nth-child(7) a { animation: navStagger 0.4s var(--ease) 0.35s both; }
+#form1 > table.auto-style1 tr:first-child td:nth-child(8) a { animation: navStagger 0.4s var(--ease) 0.4s both; }
+#form1 > table.auto-style1 tr:first-child td:nth-child(n+9) a { animation: navStagger 0.4s var(--ease) 0.45s both; }
+
+#form1 > table a,
+a[id*="LinkButton"] {
+    display: inline-flex !important;
+    align-items: center;
+    justify-content: center;
+    gap: 0.35rem;
+    padding: 0.55rem 0.9rem !important;
+    font-family: var(--font-sans) !important;
+    font-size: 0.78rem !important;
+    font-weight: 600 !important;
+    letter-spacing: 0.02em;
+    text-decoration: none !important;
+    color: var(--text-secondary) !important;
+    background: transparent !important;
+    border: 1px solid transparent !important;
+    border-radius: var(--radius-sm) !important;
+    white-space: nowrap;
+    transition:
+        color var(--duration) var(--ease),
+        background var(--duration) var(--ease),
+        border-color var(--duration) var(--ease),
+        transform var(--duration) var(--ease),
+        box-shadow var(--duration) var(--ease) !important;
+}
+
+#form1 > table a:hover,
+a[id*="LinkButton"]:hover {
+    color: var(--text-primary) !important;
+    background: var(--bg-hover) !important;
+    border-color: rgba(99, 102, 241, 0.25) !important;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 16px rgba(99, 102, 241, 0.2);
+}
+
+#form1 > table a:active,
+a[id*="LinkButton"]:active {
+    transform: translateY(0) scale(0.98);
+}
+
+/* Logout / danger nav */
+#form1 a[id*="LinkButton4"],
+#form1 a[id*="LinkButton7"][href*="logout"],
+a[id*="logout" i] {
+    color: var(--accent-danger) !important;
+}
+
+#form1 a[id*="LinkButton4"]:hover,
+#form1 a[id*="LinkButton7"]:hover {
+    background: rgba(239, 68, 68, 0.12) !important;
+    border-color: rgba(239, 68, 68, 0.35) !important;
+}
+
+/* Notifications nav — badge hook */
+a[id*="LinkButton8"][href*="notification"],
+a[href*="notification.aspx"] {
+    position: relative;
+}
+
+a[id*="LinkButton8"][href*="notification"]::after,
+a[href*="notification.aspx"]::after {
+    content: '';
+    position: absolute;
+    top: 6px;
+    right: 8px;
+    width: 8px;
+    height: 8px;
+    background: var(--accent-danger);
+    border-radius: 50%;
+    border: 2px solid var(--bg-panel);
+    animation: badgePulse 2s var(--ease) infinite;
+    box-shadow: 0 0 12px rgba(239, 68, 68, 0.6);
+}
+
+/* Main content area */
+#form1 > div,
+[id*="ContentPlaceHolder"] {
+    padding: 1.75rem clamp(1rem, 4vw, 2.5rem) 3rem;
+    max-width: var(--content-max);
+    margin: 0 auto;
+    animation: fadeUp var(--duration-slow) var(--ease) 0.15s both;
+}
+
+/* Smooth scroll-reveal for page content blocks */
+[id*="ContentPlaceHolder"] > *,
+#form1 > div > *:not(script):not(input[type="hidden"]) {
+    animation: scrollReveal var(--duration-slow) var(--ease) both;
+    animation-timeline: view();
+    animation-range: entry 0% cover 25%;
+}
+
+@supports not (animation-timeline: view()) {
+    [id*="ContentPlaceHolder"] > *,
+    #form1 > div > *:not(script) {
+        animation: fadeUp var(--duration-slow) var(--ease) 0.2s both;
+    }
+}
+
+/* Home / welcome panel */
+[id*="ContentPlaceHolder"] p,
+.welcome-panel {
+    display: block;
+    max-width: 720px;
+    margin: 2rem auto;
+    padding: 2rem 2.5rem;
+    text-align: center;
+    font-size: 1.05rem;
+    color: var(--text-secondary);
+    background: var(--bg-card);
+    backdrop-filter: var(--glass-blur);
+    border: var(--glass-border);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-card);
+}
+
+/* ── Desktop sidebar layout ──────────────────────────────────────────────────── */
+@media (min-width: 1100px) {
+    center {
+        padding-left: var(--sidebar-width);
+        text-align: left;
+    }
+
+    h1 {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 100;
+        padding-left: calc(var(--sidebar-width) + 1.5rem);
+        height: var(--header-height);
+        display: flex;
+        align-items: center;
+    }
+
+    #form1 > table.auto-style1,
+    #form1 > table:first-of-type {
+        position: fixed !important;
+        top: var(--header-height);
+        left: 0 !important;
+        width: var(--sidebar-width) !important;
+        height: calc(100vh - var(--header-height)) !important;
+        z-index: 90;
+        border-right: var(--glass-border) !important;
+        border-bottom: none !important;
+        overflow-y: auto;
+        overflow-x: hidden;
+        animation: slideInLeft var(--duration-slow) var(--ease) both;
+    }
+
+    #form1 > table.auto-style1 tr:first-child,
+    #form1 > table:first-of-type tr:first-child {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+    }
+
+    #form1 > table.auto-style1 tr:first-child td,
+    #form1 > table:first-of-type tr:first-child td {
+        display: block;
+        width: 100% !important;
+        padding: 0.25rem 0.75rem !important;
+    }
+
+    #form1 > table a,
+    a[id*="LinkButton"] {
+        width: 100%;
+        justify-content: flex-start !important;
+        padding: 0.7rem 1rem !important;
+        border-radius: var(--radius-sm) !important;
+    }
+
+    #form1 > table a:hover {
+        background: var(--gradient-nav-active) !important;
+        border-left: 3px solid var(--accent) !important;
+        padding-left: calc(1rem - 3px) !important;
+    }
+
+    #form1 > div,
+    [id*="ContentPlaceHolder"] {
+        margin-top: var(--header-height);
+        max-width: none;
+        padding-left: 2rem;
+        padding-right: 2.5rem;
+    }
+}
+
+/* ── Cards & panels ──────────────────────────────────────────────────────────── */
+.lms-card,
+.book-card,
+.panel-card,
+div:has(> table[cellpadding]):not(:has(table[id*="GridView"])) {
+    background: var(--bg-card);
+    background-image: var(--gradient-card);
+    backdrop-filter: var(--glass-blur);
+    -webkit-backdrop-filter: var(--glass-blur);
+    border: var(--glass-border);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-card);
+    padding: clamp(1.25rem, 3vw, 2rem);
+    margin: 1.5rem auto;
+    max-width: 640px;
+    transition:
+        transform var(--duration) var(--ease),
+        box-shadow var(--duration) var(--ease);
+    animation: fadeUp var(--duration-slow) var(--ease) both;
+}
+
+.lms-card:hover,
+.book-card:hover,
+.panel-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-lg), var(--shadow-glow);
+}
+
+.book-card {
+    animation: bookFloat 4s var(--ease) infinite;
+}
+
+/* Book list GridView — card-like rows on wide screens */
+table[id*="GridView"][id*="book" i] tr.GridViewRow td,
+table[id*="GridView"][id*="Book" i] tr.GridViewRow td,
+table[id*="GridView"] tr.GridViewRow td:first-child {
+    transition: transform var(--duration) var(--ease), box-shadow var(--duration) var(--ease);
+}
+
+table[id*="GridView"] tr.GridViewRow:hover td:first-child {
+    position: relative;
+}
+
+/* Issued books / student records emphasis */
+table[id*="GridView"][id*="issue" i] tr:hover td,
+table[id*="GridView"][id*="student" i] tr:hover td,
+table[id*="GridView"][id*="Student" i] tr:hover td {
+    box-shadow: inset 3px 0 0 var(--accent-secondary);
+}
+
+/* Data table category headers (optional CssClass on GridView) */
+.grid-books th,
+.grid-students th,
+.grid-issued th,
+.grid-records th {
+    background: rgba(34, 211, 238, 0.15) !important;
+}
+
+.grid-books th { border-bottom-color: var(--accent-secondary) !important; }
+.grid-students th { border-bottom-color: var(--accent) !important; }
+.grid-issued th { border-bottom-color: var(--accent-warm) !important; }
+.grid-records th { border-bottom-color: var(--accent-success) !important; }
+
+/* Form layout tables (not GridView, not nav) */
+#form1 > div table,
+[id*="ContentPlaceHolder"] table:not([id*="GridView"]) {
+    width: 100%;
+    max-width: 560px;
+    margin: 1.5rem auto;
+    border-collapse: separate;
+    border-spacing: 0 0.75rem;
+    background: var(--bg-card);
+    backdrop-filter: var(--glass-blur);
+    -webkit-backdrop-filter: var(--glass-blur);
+    border: var(--glass-border);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-card);
+    padding: 1.5rem 1.75rem;
+    animation: fadeUp var(--duration-slow) var(--ease) 0.12s both;
+}
+
+#form1 > div table.auto-style1,
+#form1 > div table.auto-style2,
+[id*="ContentPlaceHolder"] table.auto-style1,
+[id*="ContentPlaceHolder"] table.auto-style2 {
+    border: var(--glass-border) !important;
+}
+
+#form1 > div table td,
+[id*="ContentPlaceHolder"] table:not([id*="GridView"]) td {
+    padding: 0.65rem 0.85rem !important;
+    border: none !important;
+    background: transparent !important;
+    color: var(--text-secondary) !important;
+    font-size: 0.875rem;
+    vertical-align: middle !important;
+}
+
+#form1 > div table td:first-child,
+[id*="ContentPlaceHolder"] table:not([id*="GridView"]) td:first-child {
+    font-weight: 600;
+    color: var(--text-muted) !important;
+    text-transform: uppercase;
+    font-size: 0.72rem;
+    letter-spacing: 0.06em;
+    width: 38%;
+}
+
+/* Login / standalone form tables */
+/* Login, registration & standalone auth pages */
+.lms-auth-page,
+body.lms-login,
+body:has(form#form1 table.auto-style1:not([id*="GridView"])) {
+    min-height: 100vh;
+}
+
+.lms-auth-brand {
+    text-align: center;
+    margin-bottom: 1.5rem;
+    animation: fadeDown var(--duration-slow) var(--ease) both;
+}
+
+.lms-auth-brand::before {
+    content: '';
+    display: block;
+    width: 64px;
+    height: 64px;
+    margin: 0 auto 1rem;
+    border-radius: var(--radius);
+    background: var(--gradient-accent);
+    box-shadow: var(--shadow-glow);
+}
+
+.lms-auth-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin: 0 0 0.35rem;
+}
+
+.lms-auth-subtitle {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+}
+
+.lms-auth-footer {
+    margin-top: 1.25rem;
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    text-align: center;
+}
+
+.lms-auth-footer a {
+    color: var(--accent-light);
+    font-weight: 600;
+}
+
+body:not(:has(#form1 > table.auto-style1)) #form1 table,
+body:not(:has(#form1 > table:first-of-type a[id*="LinkButton"])) #form1 > div > table,
+body > form#form1 > div > table.auto-style1 {
+    max-width: 420px;
+    margin: 2rem auto;
+    padding: 2rem 2.25rem;
+    background: var(--bg-card);
+    backdrop-filter: var(--glass-blur);
+    -webkit-backdrop-filter: var(--glass-blur);
+    border: var(--glass-border) !important;
+    border-radius: var(--radius-lg) !important;
+    box-shadow: var(--shadow-lg), 0 0 80px rgba(99, 102, 241, 0.08);
+    animation: fadeUp var(--duration-slow) var(--ease-spring) both;
+}
+
+body:not(:has(#form1 > table.auto-style1)) {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 2rem 1rem;
+}
+
+body:not(:has(#form1 > table.auto-style1))::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background:
+        radial-gradient(circle at 30% 20%, rgba(99, 102, 241, 0.2), transparent 45%),
+        radial-gradient(circle at 70% 80%, rgba(34, 211, 238, 0.12), transparent 40%);
+    pointer-events: none;
+    z-index: -1;
+}
+
+/* ── GridView & data tables ──────────────────────────────────────────────────── */
+table[id*="GridView"],
+.GridView,
+.gridview,
+div:has(> table[id*="GridView"]) {
+    display: block;
+    width: 100% !important;
+    max-width: 100%;
+    margin: 1.5rem 0;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    border-radius: var(--radius-lg);
+    background: var(--bg-card);
+    backdrop-filter: var(--glass-blur);
+    -webkit-backdrop-filter: var(--glass-blur);
+    border: var(--glass-border);
+    box-shadow: var(--shadow-card);
+    animation: fadeUp var(--duration-slow) var(--ease) 0.2s both;
+}
+
+table[id*="GridView"] {
+    width: 100% !important;
+    border: none !important;
+    border-collapse: collapse !important;
+    margin: 0 !important;
+    font-size: 0.875rem;
+}
+
+/* GridView header */
+table[id*="GridView"] th,
+table[id*="GridView"] tr th,
+table[id*="GridView"] .GridViewHeader th,
+table[id*="GridView"] .GridViewHeader td,
+table[id*="GridView"] thead td,
+table[id*="GridView"] tr:first-child th {
+    background: rgba(99, 102, 241, 0.2) !important;
+    color: var(--text-primary) !important;
+    font-weight: 700 !important;
+    font-size: 0.7rem !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.08em !important;
+    padding: 1rem 1.15rem !important;
+    border: none !important;
+    border-bottom: 1px solid var(--border) !important;
+    white-space: nowrap;
+    text-align: left;
+}
+
+/* GridView rows */
+table[id*="GridView"] td,
+table[id*="GridView"] .GridViewRow td,
+table[id*="GridView"] .GridViewAlternatingRow td {
+    padding: 0.9rem 1.15rem !important;
+    color: var(--text-secondary) !important;
+    border: none !important;
+    border-bottom: 1px solid var(--border) !important;
+    background: transparent !important;
+    vertical-align: middle !important;
+    transition:
+        background var(--duration) var(--ease),
+        color var(--duration) var(--ease);
+}
+
+table[id*="GridView"] tr.GridViewAlternatingRow td,
+table[id*="GridView"] tr:nth-child(even):not(:first-child) td {
+    background: var(--bg-row-alt) !important;
+}
+
+table[id*="GridView"] tr:hover td,
+table[id*="GridView"] .GridViewRow:hover td,
+table[id*="GridView"] .GridViewAlternatingRow:hover td {
+    background: var(--bg-row-hover) !important;
+    color: var(--text-primary) !important;
+}
+
+table[id*="GridView"] tr.GridViewSelectedRow td,
+table[id*="GridView"] tr.selected td {
+    background: rgba(99, 102, 241, 0.22) !important;
+    color: var(--text-primary) !important;
+    box-shadow: inset 3px 0 0 var(--accent);
+}
+
+table[id*="GridView"] tr:last-child td {
+    border-bottom: none !important;
+}
+
+/* GridView pager */
+table[id*="GridView"] .GridViewPager td,
+table[id*="GridView"] tr.GridViewPager td {
+    background: rgba(15, 23, 42, 0.6) !important;
+    padding: 0.85rem 1rem !important;
+    text-align: center !important;
+}
+
+table[id*="GridView"] .GridViewPager a,
+table[id*="GridView"] .GridViewPager span {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 2rem;
+    height: 2rem;
+    padding: 0 0.5rem;
+    margin: 0 0.15rem;
+    border-radius: var(--radius-sm);
+    font-weight: 600;
+    font-size: 0.8rem;
+    transition: all var(--duration) var(--ease);
+}
+
+table[id*="GridView"] .GridViewPager a {
+    color: var(--accent-light) !important;
+    background: rgba(99, 102, 241, 0.1);
+    text-decoration: none !important;
+}
+
+table[id*="GridView"] .GridViewPager a:hover {
+    background: var(--accent) !important;
+    color: #fff !important;
+}
+
+table[id*="GridView"] .GridViewPager span {
+    background: var(--gradient-accent);
+    color: #fff !important;
+}
+
+/* GridView action links */
+table[id*="GridView"] td a,
+table[id*="GridView"] td input[type="submit"],
+table[id*="GridView"] td input[type="button"] {
+    display: inline-flex !important;
+    align-items: center;
+    padding: 0.4rem 0.85rem !important;
+    margin: 0.15rem 0.2rem;
+    font-size: 0.75rem !important;
+    font-weight: 600 !important;
+    border-radius: var(--radius-pill) !important;
+    text-decoration: none !important;
+    transition: all var(--duration) var(--ease) !important;
+}
+
+table[id*="GridView"] td a {
+    background: rgba(99, 102, 241, 0.15) !important;
+    color: var(--accent-light) !important;
+    border: 1px solid rgba(99, 102, 241, 0.3) !important;
+}
+
+table[id*="GridView"] td a:hover {
+    background: var(--accent) !important;
+    color: #fff !important;
+    transform: scale(1.05);
+    box-shadow: 0 4px 16px var(--accent-glow);
+}
+
+table[id*="GridView"] td a[id*="Delete" i],
+table[id*="GridView"] td a[id*="Reject" i],
+table[id*="GridView"] td a[id*="LinkButton1"] {
+    background: rgba(239, 68, 68, 0.12) !important;
+    color: var(--accent-danger) !important;
+    border-color: rgba(239, 68, 68, 0.35) !important;
+}
+
+table[id*="GridView"] td a[id*="Delete" i]:hover,
+table[id*="GridView"] td a[id*="Reject" i]:hover {
+    background: var(--accent-danger) !important;
+    color: #fff !important;
+}
+
+table[id*="GridView"] td a[id*="Accept" i],
+table[id*="GridView"] td a[id*="LinkButton2"] {
+    background: rgba(16, 185, 129, 0.12) !important;
+    color: var(--accent-success) !important;
+    border-color: rgba(16, 185, 129, 0.35) !important;
+}
+
+table[id*="GridView"] td a[id*="Accept" i]:hover {
+    background: var(--accent-success) !important;
+    color: #fff !important;
+}
+
+/* Generic tables (fallback for Web Forms tables) */
+table:not([id*="GridView"]):not(#form1 > table:first-of-type) {
+    border-collapse: collapse;
+}
+
+/* Avoid styling nav as data grid on content pages */
+@media (max-width: 1099px) {
+    #form1 > table:first-of-type th,
+    #form1 > table:first-of-type tr:first-child td {
+        background: transparent !important;
+        text-transform: none !important;
+        font-size: inherit !important;
+    }
+}
+
+/* ── Buttons (Button, LinkButton in content) ─────────────────────────────────── */
+input[type="submit"],
+input[type="button"],
+button,
+.aspNetButton {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.7rem 1.5rem;
+    font-family: var(--font-sans);
+    font-size: 0.85rem;
+    font-weight: 600;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+    color: #fff !important;
+    background: var(--gradient-accent) !important;
+    border: none !important;
+    border-radius: var(--radius-sm) !important;
+    cursor: pointer;
+    box-shadow: 0 4px 20px var(--accent-glow);
+    transition:
+        transform var(--duration) var(--ease),
+        box-shadow var(--duration) var(--ease),
+        filter var(--duration) var(--ease) !important;
+}
+
+input[type="submit"]:hover,
+input[type="button"]:hover,
+button:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-glow);
+    filter: brightness(1.08);
+}
+
+input[type="submit"]:active,
+input[type="button"]:active,
+button:active {
+    transform: translateY(0) scale(0.98);
+}
+
+input[type="submit"]:disabled,
+input[type="button"]:disabled,
+button:disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+    transform: none;
+}
+
+/* Secondary button — add class CssClass="btn-secondary" in markup if needed */
+input.btn-secondary,
+.btn-secondary {
+    background: transparent !important;
+    color: var(--accent-light) !important;
+    border: 1.5px solid rgba(99, 102, 241, 0.45) !important;
+    box-shadow: none !important;
+}
+
+input.btn-secondary:hover {
+    background: rgba(99, 102, 241, 0.15) !important;
+}
+
+/* ── Form controls ───────────────────────────────────────────────────────────── */
+input[type="text"],
+input[type="password"],
+input[type="email"],
+input[type="number"],
+input[type="tel"],
+input[type="search"],
+input[type="date"],
+input[type="datetime-local"],
+select,
+textarea {
+    width: 100%;
+    max-width: 100%;
+    padding: 0.75rem 1rem;
+    font-family: var(--font-sans);
+    font-size: 0.9rem;
+    color: var(--text-primary);
+    background: var(--bg-input) !important;
+    border: 1px solid var(--border) !important;
+    border-radius: var(--radius-sm) !important;
+    outline: none;
+    transition:
+        border-color var(--duration) var(--ease),
+        box-shadow var(--duration) var(--ease),
+        background var(--duration) var(--ease);
+}
+
+input:hover:not(:disabled),
+select:hover:not(:disabled),
+textarea:hover:not(:disabled) {
+    border-color: rgba(148, 163, 184, 0.28) !important;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+    border-color: var(--border-focus) !important;
+    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2) !important;
+    background: rgba(15, 23, 42, 0.9) !important;
+}
+
+input::placeholder,
+textarea::placeholder {
+    color: var(--text-muted);
+}
+
+select {
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/1999/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%2394a3b8' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E") !important;
+    background-repeat: no-repeat !important;
+    background-position: right 0.85rem center !important;
+    padding-right: 2.5rem !important;
+    cursor: pointer;
+}
+
+select option {
+    background: var(--bg-elevated);
+    color: var(--text-primary);
+}
+
+textarea {
+    min-height: 120px;
+    resize: vertical;
+}
+
+/* ASP.NET Label */
+span[id*="Label"],
+label,
+.lbl,
+span.aspNetLabel {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+}
+
+/* Validation & message labels */
+span[id*="lbl" i],
+span[id*="Msg" i],
+span[id*="msg" i],
+span[style*="color:Red" i],
+span[style*="color:red" i],
+.validation-error {
+    display: inline-block;
+    margin-top: 0.75rem;
+    padding: 0.65rem 1rem;
+    border-radius: var(--radius-sm);
+    font-size: 0.85rem;
+    font-weight: 500;
+    animation: fadeUp var(--duration) var(--ease);
+}
+
+span[style*="color:Red" i],
+span[style*="color:red" i],
+.validation-error {
+    background: rgba(239, 68, 68, 0.12);
+    border-left: 3px solid var(--accent-danger);
+    color: #fca5a5 !important;
+}
+
+span[id*="lbl" i]:not([style*="color:Red" i]):not([style*="color:red" i]) {
+    background: rgba(16, 185, 129, 0.1);
+    border-left: 3px solid var(--accent-success);
+    color: #6ee7b7 !important;
+}
+
+/* Calendar extender / ASP.NET Calendar */
+.ajax__calendar,
+.Calendar {
+    background: var(--bg-panel) !important;
+    border: var(--glass-border) !important;
+    border-radius: var(--radius) !important;
+    box-shadow: var(--shadow-lg) !important;
+    color: var(--text-primary) !important;
+}
+
+/* ── Search bars ─────────────────────────────────────────────────────────────── */
+input[type="search"],
+input[id*="Search" i],
+input[id*="search" i],
+.search-input {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/1999/svg' width='18' height='18' viewBox='0 0 24 24' fill='none' stroke='%2364748b' stroke-width='2'%3E%3Ccircle cx='11' cy='11' r='8'/%3E%3Cpath d='m21 21-4.35-4.35'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: 1rem center;
+    padding-left: 2.75rem !important;
+    border-radius: var(--radius-pill) !important;
+}
+
+/* ── Modals & popups (ModalPopupExtender, Panel) ─────────────────────────────── */
+.modalBackground,
+.ajax__modal_background,
+.ui-widget-overlay {
+    background: rgba(2, 6, 23, 0.75) !important;
+    backdrop-filter: blur(6px);
+    animation: overlayIn var(--duration) var(--ease) both;
+}
+
+.modalPopup,
+.ajax__modal_popup,
+div[id*="Modal" i],
+div[id*="Popup" i],
+.panel-popup {
+    background: var(--bg-card) !important;
+    backdrop-filter: var(--glass-blur);
+    border: var(--glass-border) !important;
+    border-radius: var(--radius-lg) !important;
+    box-shadow: var(--shadow-lg), var(--shadow-glow) !important;
+    padding: 1.75rem !important;
+    animation: modalIn var(--duration-slow) var(--ease-spring) both;
+}
+
+/* UpdateProgress / loading overlay */
+#UpdateProgress1,
+div[id*="UpdateProgress" i],
+.loading-overlay,
+.lms-loading {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(10, 14, 23, 0.65);
+    backdrop-filter: blur(4px);
+    animation: overlayIn var(--duration) var(--ease);
+}
+
+#UpdateProgress1::after,
+div[id*="UpdateProgress" i]::after,
+.lms-loading::after {
+    content: '';
+    width: 48px;
+    height: 48px;
+    border: 3px solid var(--border);
+    border-top-color: var(--accent);
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+}
+
+/* Skeleton shimmer (add class lms-skeleton to placeholders) */
+.lms-skeleton {
+    background: linear-gradient(
+        90deg,
+        var(--bg-panel) 25%,
+        rgba(99, 102, 241, 0.08) 50%,
+        var(--bg-panel) 75%
+    );
+    background-size: 200% 100%;
+    animation: shimmer 1.5s infinite;
+    border-radius: var(--radius-sm);
+    min-height: 1rem;
+}
+
+/* ── Management panels & book grid ───────────────────────────────────────────── */
+.lms-stats,
+.management-panel {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.25rem;
+    margin: 1.5rem 0;
+}
+
+.stat-card {
+    padding: 1.35rem;
+    background: var(--bg-card);
+    border: var(--glass-border);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-card);
+    transition: transform var(--duration) var(--ease);
+}
+
+.stat-card:hover {
+    transform: translateY(-3px);
+}
+
+.stat-card strong {
+    display: block;
+    font-size: 1.75rem;
+    background: var(--gradient-accent);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+
+/* ── Notification badge (explicit class) ───────────────────────────────────── */
+.lms-badge,
+.notification-badge {
+    position: relative;
+    display: inline-flex;
+}
+
+.lms-badge::after,
+.notification-badge::after {
+    content: attr(data-count);
+    position: absolute;
+    top: -4px;
+    right: -4px;
+    min-width: 18px;
+    height: 18px;
+    padding: 0 5px;
+    font-size: 0.65rem;
+    font-weight: 700;
+    line-height: 18px;
+    text-align: center;
+    color: #fff;
+    background: var(--accent-danger);
+    border-radius: var(--radius-pill);
+    animation: badgePulse 2s var(--ease) infinite;
+    box-shadow: 0 0 14px rgba(239, 68, 68, 0.5);
+}
+
+/* ── Utility classes (optional in CssClass) ──────────────────────────────────── */
+.text-center {
+    text-align: center !important;
+}
+
+.text-muted {
+    color: var(--text-muted) !important;
+}
+
+.mt-1 {
+    margin-top: 0.5rem !important;
+}
+
+.mt-2 {
+    margin-top: 1rem !important;
+}
+
+.mb-2 {
+    margin-bottom: 1rem !important;
+}
+
+.w-full {
+    width: 100% !important;
+}
+
+.fade-in {
+    animation: fadeIn var(--duration-slow) var(--ease) both;
+}
+
+.glass {
+    background: var(--bg-glass);
+    backdrop-filter: var(--glass-blur);
+    border: var(--glass-border);
+}
+
+/* Registration / new student form — same auth styling */
+.lms-register form#form1 > div table,
+[id*="ContentPlaceHolder"] table:has(select[id*="DropDownList"]) {
+    max-width: 520px;
+}
+
+/* Page transition wrapper (optional CssClass on Panel) */
+.lms-page-transition {
+    animation: pageEnter var(--duration-slow) var(--ease) both;
+}
+
+/* Checkbox / RadioButtonList (Web Forms) */
+input[type="checkbox"],
+input[type="radio"] {
+    accent-color: var(--accent);
+    width: 1.1rem;
+    height: 1.1rem;
+    cursor: pointer;
+}
+
+table[id*="RadioButtonList"] label,
+span[id*="RadioButtonList"] label {
+    color: var(--text-secondary);
+    margin-left: 0.35rem;
+}
+
+/* FileUpload */
+input[type="file"] {
+    font-family: var(--font-sans);
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    padding: 0.5rem 0;
+}
+
+/* ListBox */
+select[multiple],
+select[size]:not([size="1"]) {
+    min-height: 120px;
+    padding: 0.5rem;
+}
+
+/* HyperLink in content */
+a[id*="HyperLink"] {
+    color: var(--accent-light) !important;
+    font-weight: 600;
+    text-decoration: none !important;
+    border-bottom: 1px dashed rgba(129, 140, 248, 0.4);
+    transition: color var(--duration) var(--ease), border-color var(--duration) var(--ease);
+}
+
+a[id*="HyperLink"]:hover {
+    color: var(--accent-secondary) !important;
+    border-bottom-color: var(--accent-secondary);
+}
+
+/* ── Responsive ──────────────────────────────────────────────────────────────── */
+@media (max-width: 1099px) {
+    h1 {
+        font-size: 1.2rem;
+        padding: 1rem;
+    }
+
+    #form1 > table.auto-style1 tr:first-child,
+    #form1 > table:first-of-type tr:first-child {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 0.25rem;
+        padding: 0.5rem;
+    }
+
+    #form1 > table.auto-style1 tr:first-child td,
+    #form1 > table:first-of-type tr:first-child td {
+        flex: 0 1 auto;
+    }
+
+    #form1 > div,
+    [id*="ContentPlaceHolder"] {
+        padding: 1.25rem 1rem 2rem;
+    }
+
+    table[id*="GridView"] {
+        font-size: 0.8rem;
+    }
+
+    table[id*="GridView"] th,
+    table[id*="GridView"] td {
+        padding: 0.65rem 0.75rem !important;
+    }
+}
+
+@media (max-width: 768px) {
+    input[type="submit"],
+    input[type="button"],
+    button {
+        width: 100%;
+        margin-top: 0.35rem;
+    }
+
+    #form1 > div table,
+    [id*="ContentPlaceHolder"] table:not([id*="GridView"]) {
+        display: block;
+        padding: 1rem;
+    }
+
+    #form1 > div table tr,
+    [id*="ContentPlaceHolder"] table:not([id*="GridView"]) tr {
+        display: flex;
+        flex-direction: column;
+        margin-bottom: 0.75rem;
+    }
+
+    #form1 > div table td,
+    [id*="ContentPlaceHolder"] table:not([id*="GridView"]) td {
+        width: 100% !important;
+        display: block;
+    }
+
+    table[id*="GridView"] {
+        border-radius: var(--radius-sm);
+    }
+
+    div:has(> table[id*="GridView"]) {
+        margin-left: -0.5rem;
+        margin-right: -0.5rem;
+        border-radius: 0;
+    }
+}
+
+@media (max-width: 480px) {
+    h1 {
+        font-size: 1.05rem;
+    }
+
+    #form1 > table a,
+    a[id*="LinkButton"] {
+        font-size: 0.7rem !important;
+        padding: 0.45rem 0.55rem !important;
+    }
+
+    table[id*="GridView"] th,
+    table[id*="GridView"] td {
+        padding: 0.5rem 0.55rem !important;
+        font-size: 0.72rem !important;
+    }
+}
+
+/* ── Reduced motion ──────────────────────────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+
+    html {
+        scroll-behavior: auto;
+    }
+}
+
+/* ── Print ───────────────────────────────────────────────────────────────────── */
+@media print {
+    body {
+        background: #fff;
+        color: #000;
+    }
+
+    #form1 > table,
+    h1 hr {
+        display: none !important;
+    }
+
+    table[id*="GridView"] {
+        box-shadow: none;
+        border: 1px solid #ccc;
+    }
+}

@@ -1,0 +1,60 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Site2.master.cs" Inherits="LibraryManagementSystem.Site2" %>
+
+<!DOCTYPE html>
+
+<html>
+<head runat="server">
+    <link rel="stylesheet" href="~/CSS/library-dashboard.css" />
+    <title></title>
+    <asp:ContentPlaceHolder ID="head" runat="server">
+    </asp:ContentPlaceHolder>
+    <style type="text/css">
+        .auto-style1 {
+            width: 100%;
+            border: 3px solid #000000;
+        }
+    </style>
+</head>
+<body>
+    <center>
+        <h1 align="center">Student Panel</h1>
+        <hr />
+        <br />
+
+    <form id="form1" runat="server">
+        <table align="center" cellpadding="4" cellspacing="4" class="auto-style1">
+            <tr>
+                <td>
+                    <asp:LinkButton ID="LinkButton1" runat="server" PostBackUrl="profile.aspx">Profile</asp:LinkButton>
+                </td>
+                <td>
+                    <asp:LinkButton ID="LinkButton2" runat="server" PostBackUrl="s_search_book.aspx">Search Book</asp:LinkButton>
+                </td>
+                <td>
+                    <asp:LinkButton ID="LinkButton3" runat="server" PostBackUrl="s_all_books.aspx">All Books</asp:LinkButton>
+                </td>
+                <td>
+                    <asp:LinkButton ID="LinkButton4" runat="server" PostBackUrl="my_issue.aspx">My Issue</asp:LinkButton>
+                </td>
+                <td>
+                    <asp:LinkButton ID="LinkButton5" runat="server" PostBackUrl="book_request.aspx">Book Request</asp:LinkButton>
+                </td>
+                <td>
+                    <asp:LinkButton ID="LinkButton6" runat="server" PostBackUrl="request_status.aspx" OnClick="LinkButton6_Click">Request Status</asp:LinkButton>
+                </td>
+                <td>
+                    <asp:LinkButton ID="LinkButton8" runat="server" PostBackUrl="notification.aspx">Notifications</asp:LinkButton>
+                </td>
+                <td>
+                    <asp:LinkButton ID="LinkButton7" runat="server" PostBackUrl="logout.aspx">Logout</asp:LinkButton>
+                </td>
+            </tr>
+        </table>
+        <div>
+            <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+            </asp:ContentPlaceHolder>
+        </div>
+    </form>
+        </center>
+</body>
+</html>
